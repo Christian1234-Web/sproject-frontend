@@ -195,7 +195,7 @@ const Step = ({ imgSrc, title, description }) => (
 
 const Testimonials = () => (
   <>
-    <section className="flex flex-col mt-24  max-w-full font-bold text-zinc-800 w-full max-md:mt-10">
+    <section className="flex flex-col mt-24 px-3  max-w-full font-bold text-zinc-800 w-full max-md:mt-10">
       <h2 className="text-3xl font-semibold whatwedotext leading-10 w-[336px] max-md:max-w-full">
         We provide the best <br /> for you
       </h2>
@@ -228,7 +228,7 @@ const TestimonialSectionOne = () => {
 const TestimonialSectionTwo = () => {
   return (
     <div className="mt-11 w-full max-w-full  md:mx-auto">
-      <div className="flex flex-col md:flex-row gap-4  testimonial-container w-full justify-center ">
+      <div className="flex flex-col md:flex-row gap-4 px-3  testimonial-container w-full justify-center ">
         <Testimonial
           text="CareerGuide is the best affiliate platform"
           description="CareerGuide has been a fantastic opportunity for me. The platform helped me streamline my skills and focus on a specific career path in software development"
