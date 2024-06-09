@@ -1,0 +1,23 @@
+@media (max-width: 640px) {
+    .testimonial-container {
+      /* margin-left: 2px; */
+
+    }
+    .whatwedotext{
+        width: 100%;
+    }
+  }
+  
+  @media screen and (min-width: 600px) {
+    .testimonial-container {
+      padding-left: 20px;
+      padding-right: 20px;
+
+    }
+    .whatwedotext{
+        margin-left: 20px;
+        width: 465px;
+    }
+  }
+  
+  
