@@ -21,8 +21,7 @@ export function encodeValue(val) {
 
   return JSON.stringify(val);
 }
-export const staffname = (user) =>
-  user ? `${user?.first_name} ${user?.last_name}` : "--";
+
 
 const headers = (user) => {
   // console.log(user.accessToken)
@@ -86,29 +85,7 @@ export const httpRequest = async (url, method, data) => {
   const result = await checkStatus(response);
   return parseJSON(result);
 };
-export const formatPatientId = (data) => {
-  let formattedId = String(data.id);
-  let len = 7 - formattedId.length;
-  while (len >= 0) {
-    formattedId = "0" + formattedId;
-    len--;
-  }
-  return formattedId;
-};
-export const patientname = (user, pid = false) =>
-  user
-    ? `${user.other_names} ${user.surname} ${
-        pid
-          ? `(${formatPatientId(user)} ${
-              user.legacy_patient_id ? `[${user.legacy_patient_id}]` : ""
-            })`
-          : ""
-      }`
-    : "--";
 
-export const formattedTotalPrice = (price) => {
-  return `₦${new Intl.NumberFormat("en-US").format(price)}`;
-};
 
 export const scrollTop = () =>{
   window.scrollTo({

@@ -47,9 +47,6 @@ function App() {
 
           <Route path="/test" element={<Test />} />
 
-
-
-
        </Routes>
        </BrowserRouter>
        </StoreContext>

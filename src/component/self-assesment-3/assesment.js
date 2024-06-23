@@ -5,15 +5,16 @@ import { ASSSESMENT_COOKIE } from "../../services/constants";
 const storage = new SSRStorage();
 
 function SelfAssessment() {
-const [text,setText] = useState('');
+const [text,setText] = useState([]);
   useEffect(()=>{
-    async function fetchSCore(){
-      const score = await storage.getItem(ASSSESMENT_COOKIE);
-      if(score?.Intermediate >= 3 || score?.Professional >= 3 || score?.Experience >= 3){
-        setText('Congratulations! You are proficient with computer programming.')
-      }
+    async function fetchMessage(){
+      const message = await storage.getItem(ASSSESMENT_COOKIE);
+      const  messages = message.trim().split('.');
+      console.log(messages)
+        setText(messages)
+      
     }
-    fetchSCore()
+    fetchMessage()
   },[]);
   return (
     <div className="flex flex-col mt-2.5 ml-5 max-w-full font-medium w-[897px]">
@@ -31,13 +32,18 @@ const [text,setText] = useState('');
           className="w-full aspect-[1.01] max-w-[377px]"
         />
       </div>
-      <p className="self-center mt-9 text-sm text-neutral-700 max-md:max-w-full">
-       {text}
-      </p>
-      <Link to='/self-assesment-two' className="justify-center items-center self-center">
-      {/* <button className="justify-center items-center self-center py-1 mt-8 max-w-full text-sm text-white bg-sky-600 rounded-md w-[315px] max-md:px-5 max-md:mt-10">
-        Take Test
-      </button> */}
+      
+      <ul style={{listStyleType:"disc"}} className="mt-9 text-sm text-neutral-700 max-md:max-w-full">
+        {text.map(e=>{
+        if(e !== ""){
+          return(
+            <li>{e}</li>
+          )
+        }
+        })}
+      </ul>
+      <Link to='/dashboard' className="justify-center text-center text-decoration-none  items-center self-center py-2 mt-14 max-w-full text-sm text-white bg-sky-600 rounded-md w-[315px] max-md:px-5 max-md:mt-10">
+      Back Home
       </Link>
       
     </div>

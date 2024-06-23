@@ -89,12 +89,12 @@ function Job({ jobs }) {
                   className="flex w-full sm:w-[700px]  grow shrink-0 justify-center items-center px-2.5 py-1 text-base text-white whitespace-nowrap bg-sky-600 rounded-md basis-0  max-md:px-5"
                 >
                   <div className="flex gap-2.5">
-                    <img
+                    {/* <img
                       loading="lazy"
                       src="https://cdn.builder.io/api/v1/image/assets/TEMP/83f4f74122f58b11e5650852525d368e20e88ba2c09a5f305c210307af23a351?apiKey=090fe2b7543f4078be1f7ae4ac6ff07a&"
                       alt="Apply Icon"
                       className="shrink-0 w-6 aspect-square"
-                    />
+                    /> */}
                     <span>Apply</span>
                   </div>
                 </button>

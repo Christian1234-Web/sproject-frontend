@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { request } from "../../services/utilities";
 import SSRStorage from "../../services/storage";
 import { ASSSESMENT_COOKIE } from "../../services/constants";
@@ -80,6 +80,7 @@ const SelfAssessment = () => {
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const navigate = useNavigate();
+
   const handleSelectAnswer = (questionText, selectedAnswer) => {
     setSelectedAnswers((prevState) => ({
       ...prevState,
@@ -93,7 +94,7 @@ const SelfAssessment = () => {
       answerCount[answer] = (answerCount[answer] || 0) + 1;
     });
     storage.setItem(ASSSESMENT_COOKIE, answerCount);
-    console.log(answerCount)
+    console.log(answerCount);
     navigate("/self-assesment-three");
   };
 
@@ -110,6 +111,43 @@ const SelfAssessment = () => {
   useEffect(() => {
     fetchQuestions();
   }, []);
+
+  const calculateSuitabilityMessage = (selectedAnswer) => {
+    switch (selectedAnswer) {
+      case "Experience":
+      case "Professional":
+        return "best suited";
+      case "Intermediate":
+        return "partially suited";
+      case "Beginner":
+        return "not best suited";
+      default:
+        return "";
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // Construct result message based on selected answers
+    let message = '';
+
+    questions.forEach((question) => {
+      const selectedAnswer = selectedAnswers[question.question];
+      if (selectedAnswer) {
+        const suitability = calculateSuitabilityMessage(selectedAnswer);
+        message += `You are ${suitability} for ${question.title}.`;
+      }
+    });
+
+    // Update result message state
+    console.log(message);
+    // setResultMessage(message);
+    storage.setItem(ASSSESMENT_COOKIE, message);
+
+    // For demonstration, navigate to the next page
+    navigate("/self-assesment-three");
+  };
 
   return (
     <form className="flex flex-col pt-2 pb-2.5 bg-white rounded-md border border-solid border-zinc-400 max-w-[928px]">
@@ -128,13 +166,13 @@ const SelfAssessment = () => {
         <button className="justify-center px-4 py-1 text-sm font-medium rounded-md border border-solid border-zinc-300 text-zinc-400 max-md:px-5">
           Cancel
         </button>
-          <button
+        <button
           type="button"
-            className="justify-center px-2.5 py-1 text-sm font-semibold text-white bg-sky-800 rounded-md max-md:px-5"
-            onClick={handleNextButtonClick}
-          >
-            Next
-          </button>
+          className="justify-center px-2.5 py-1 text-sm font-semibold text-white bg-sky-800 rounded-md max-md:px-5"
+          onClick={handleSubmit}
+        >
+          Next
+        </button>
       </div>
     </form>
   );

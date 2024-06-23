@@ -9,26 +9,21 @@ const notyf = new Notyf();
 const storage = new SSRStorage();
 
 function ApplyJob({ job, setApply }) {
-  const [user,setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
-
-  const makeApplication = async(jobId) => {
-    const data = {userId:user?._id,jobId}
+  const makeApplication = async (jobId) => {
+    const data = { userId: user?._id, jobId };
     const url = `application/create`;
-    try{
-      const rs = await request(url,'POST',true,data);
-      if(rs.status === 'SUCCESS'){
-        notyf.success(
-          "Job Applied successful"
-        );
+    try {
+      const rs = await request(url, "POST", true, data);
+      if (rs.status === "SUCCESS") {
+        notyf.success("Job Applied successful");
       }
-    }catch(err){
-      notyf.error(
-        err.message
-      );
+    } catch (err) {
+      notyf.error(err.message);
       console.log(err);
     }
-  }
+  };
   const getTimeStape = (date) => {
     const timestamp = date;
     const originalDate = new Date(timestamp);
@@ -39,28 +34,28 @@ function ApplyJob({ job, setApply }) {
     const hoursDifference = Math.floor(minutesDifference / 60);
     const daysDifference = Math.floor(hoursDifference / 24);
     if (daysDifference > 0) {
-      let time = `${daysDifference} days ago`
-      return time
+      let time = `${daysDifference} days ago`;
+      return time;
     } else if (hoursDifference > 0) {
-    let time = `${hoursDifference} hours ago`
-    return time;
+      let time = `${hoursDifference} hours ago`;
+      return time;
     } else if (minutesDifference > 0) {
-      let time = `${minutesDifference} minutes ago`
+      let time = `${minutesDifference} minutes ago`;
       return time;
     } else {
-      let time =`${secondsDifference} seconds ago`;
-      return time
+      let time = `${secondsDifference} seconds ago`;
+      return time;
     }
   };
 
-  useEffect(()=>{
-    async function fetchUser(){
-      const user  = await storage.getItem(USER_COOKIE);
-      console.log(user)
+  useEffect(() => {
+    async function fetchUser() {
+      const user = await storage.getItem(USER_COOKIE);
+      console.log(user);
       setUser(user.user);
     }
-    fetchUser()
-  },[])
+    fetchUser();
+  }, []);
 
   return (
     <section className="flex flex-col pb-8 bg-white rounded-lg max-w-[691px]">
@@ -98,7 +93,9 @@ function ApplyJob({ job, setApply }) {
               alt="Clock Icon"
               className="shrink-0 self-stretch aspect-square w-[17px]"
             />
-            <div className="self-stretch my-auto">{getTimeStape(job?.createdAt)}</div>
+            <div className="self-stretch my-auto">
+              {getTimeStape(job?.createdAt)}
+            </div>
           </div>
         </div>
         <section className="flex flex-col px-4 py-7 mt-8 bg-white rounded-md shadow max-md:max-w-full">
@@ -134,10 +131,12 @@ function ApplyJob({ job, setApply }) {
               </div>
               <div className="mt-7">Job posted on</div>
               <div className="mt-1.5 font-medium text-zinc-600">
-              {new Date(job?.createdAt).toDateString()}
+                {new Date(job?.createdAt).toDateString()}
               </div>
               <div className="mt-7">Work type</div>
-              <div className="mt-1.5 font-medium text-zinc-600">{job?.workType}</div>
+              <div className="mt-1.5 font-medium text-zinc-600">
+                {job?.workType}
+              </div>
             </div>
           </div>
           <div className="flex gap-2.5 self-start mt-4 text-xs whitespace-nowrap text-neutral-500">
@@ -179,7 +178,7 @@ function ApplyJob({ job, setApply }) {
             className="justify-center items-start no-underline focus:outline-none  py-3 pl-2 mt-2 text-xs font-medium whitespace-nowrap rounded-md border border-solid border-zinc-400 text-zinc-600 max-md:pr-5 max-md:max-w-full"
             type="email"
             id="emailAddress"
-            value={user?.email} 
+            value={user?.email}
           />
           <label htmlFor="phoneNumber" className="text-xs">
             Phone Number
@@ -189,6 +188,16 @@ function ApplyJob({ job, setApply }) {
             type="tel"
             id="phoneNumber"
             value={user?.phoneNumber}
+          />
+          <label htmlFor="coverletter" className="text-xs">
+            Cover Letter
+          </label>
+          <textarea
+            className="justify-center items-start no-underline  focus:outline-none py-3 pl-2 mt-2 text-xs font-medium whitespace-nowrap rounded-md border border-solid border-zinc-400 text-zinc-600 max-md:pr-5 max-md:max-w-full"
+            type="text"
+            id="coverletter"
+            value={user?.coverletter}
+            rows={'10'}
           />
           <button
             type="button"
